@@ -40,6 +40,7 @@ from .country import Country
 from .refund import Refund
 from .fulfillment import Fulfillment, FulfillmentOrders
 from .fulfillment_event import FulfillmentEvent
+from .fulfillment_order import FulfillmentOrder
 from .fulfillment_service import FulfillmentService
 from .carrier_service import CarrierService
 from .transaction import Transaction
