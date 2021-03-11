@@ -175,6 +175,51 @@ def products(request):
     ...
 ```
 
+### ApiAccess for handling access scope operations
+
+There are common operations that are used for managing access scopes in apps. Such operations include serializing, deserializing and normalizing scopes. Other operations can include checking whether two sets of scopes grant the same API access or whether one set covers the access granted by another set.
+
+To encapsulate the access granted by access scopes, you can use the `ApiAccess` value object.
+
+#### Constructing an ApiAccess
+
+```python
+api_access = ApiAccess(["read_products", "write_orders"]) # List of access scopes
+another_api_access = ApiAccess("read_products, write_products") # String of comma-delimited access scopes
+```
+
+#### Serializing ApiAccess
+
+```python
+api_access = ApiAccess(["read_products", "write_orders"])
+
+access_scopes_list = list(api_access) # ["read_products", "write_orders"]
+comma_delmited_access_scopes = str(api_access) # "read_products,write_orders"
+```
+
+#### Comparing ApiAccess objects
+
+##### Checking for API access equality
+
+```python
+expected_api_access = ApiAccess(["read_products", "write_orders"])
+
+actual_api_access = ApiAccess(["read_products", "read_orders", "write_orders"])
+non_equal_api_access = ApiAccess(["read_products", "write_orders", "read_themes"])
+
+actual_api_access == expected_api_access # True
+non_equal_api_access == expected_api_access # False
+```
+
+##### Checking if ApiAccess covers the access of another
+
+```python
+superset_access = ApiAccess(["write_products", "write_orders", "read_themes"])
+subset_access = ApiAccess(["read_products", "write_orders"])
+
+superset_access.covers(subset_access) # True
+```
+
 ### Advanced Usage
 It is recommended to have at least a basic grasp on the principles of the [pyactiveresource](https://github.com/Shopify/pyactiveresource) library, which is a port of rails/ActiveResource to Python and upon which this package relies heavily.
 
