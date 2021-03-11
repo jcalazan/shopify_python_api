@@ -4,7 +4,6 @@ import re
 class ApiAccessError(Exception):
     pass
 
-
 class ApiAccess:
 
     SCOPE_DELIMITER = ","
@@ -32,7 +31,6 @@ class ApiAccess:
     def __store_scopes(self, scopes):
         sanitized_scopes = frozenset(filter(None, [scope.strip() for scope in scopes]))
         self.__validate_scopes(sanitized_scopes)
-
         implied_scopes = frozenset(self.__implied_scope(scope) for scope in sanitized_scopes)
         self._compressed_scopes = sanitized_scopes - implied_scopes
         self._expanded_scopes = sanitized_scopes.union(implied_scopes)
