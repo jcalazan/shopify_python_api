@@ -54,8 +54,7 @@ class Session(object):
         return
 
     def create_permission_url(self, scope, redirect_uri, state=None):
-        access_scopes = ApiAccess(scope)
-        query_params = dict(client_id=self.api_key, scope=str(access_scopes), redirect_uri=redirect_uri)
+        query_params = dict(client_id=self.api_key, scope=",".join(scope), redirect_uri=redirect_uri)
         if state:
             query_params["state"] = state
         return "https://%s/admin/oauth/authorize?%s" % (self.url, urllib.parse.urlencode(query_params))
@@ -78,7 +77,7 @@ class Session(object):
             json_payload = json.loads(response.read().decode("utf-8"))
             self.token = json_payload["access_token"]
             self.access_scopes = json_payload["scope"]
-            
+
             return self.token
         else:
             raise Exception(response.msg)

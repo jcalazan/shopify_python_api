@@ -13,6 +13,7 @@ class ApiAccessTest(TestCase):
     def test_creating_api_access_from_invalid_scopes_raises(self):
         with self.assertRaises(ApiAccessError) as cm:
             api_access = ApiAccess("bad_scope, read_orders,write_orders")
+
         self.assertEqual("'bad_scope' is not a valid access scope", str(cm.exception))
 
     def test_returns_list_of_reduced_scopes(self):
