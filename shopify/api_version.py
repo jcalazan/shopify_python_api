@@ -25,8 +25,46 @@ class ApiVersion(object):
 
     @classmethod
     def define_known_versions(cls):
-        req = request.urlopen("https://app.shopify.com/services/apis.json")
-        data = json.loads(req.read().decode("utf-8"))
+        json_string = '{"apis":[{"handle":"admin","versions":[{"handle":"2019' \
+                      '-04","latest_supported":false,"display_name":"2019-04 ' \
+                      '(Unsupported)","supported":true},{"handle":"2019-07",' \
+                      '"latest_supported":false,"display_name":"2019-07 ' \
+                      '(Unsupported)","supported":true},{"handle":"2019-10",' \
+                      '"latest_supported":false,"display_name":"2019-10 ' \
+                      '(Unsupported)","supported":true},{"handle":"2020-01",' \
+                      '"latest_supported":false,"display_name":"2020-01 ' \
+                      '(Unsupported)","supported":true},{"handle":"2020-04",' \
+                      '"latest_supported":false,"display_name":"2020-04",' \
+                      '"supported":true},{"handle":"2020-07","latest_' \
+                      'supported":false,"display_name":"2020-07","supported":' \
+                      'true},{"handle":"2020-10","latest_supported":false,' \
+                      '"display_name":"2020-10","supported":true},{"handle":' \
+                      '"2021-01","latest_supported":true,"display_name":' \
+                      '"2021-01 (Latest)","supported":true},{"handle":' \
+                      '"2021-04","latest_supported":false,"display_name":' \
+                      '"2021-04 (Release candidate)","supported":false},' \
+                      '{"handle":"unstable","latest_supported":false,"display' \
+                      '_name":"unstable","supported":false}]},{"handle":' \
+                      '"storefront","versions":[{"handle":"2019-07","latest_' \
+                      'supported":false,"display_name":"2019-07 ' \
+                      '(Unsupported)","supported":true},{"handle":"2019-10",' \
+                      '"latest_supported":false,"display_name":"2019-10 ' \
+                      '(Unsupported)","supported":true},{"handle":"2020-01",' \
+                      '"latest_supported":false,"display_name":"2020-01 ' \
+                      '(Unsupported)","supported":true},{"handle":"2020-04",' \
+                      '"latest_supported":false,"display_name":"2020-04",' \
+                      '"supported":true},{"handle":"2020-07","latest_' \
+                      'supported":false,"display_name":"2020-07",' \
+                      '"supported":true},{"handle":"2020-10","latest_' \
+                      'supported":false,"display_name":"2020-10","supported":' \
+                      'true},{"handle":"2021-01","latest_supported":true,' \
+                      '"display_name":"2021-01 (Latest)","supported":true},' \
+                      '{"handle":"2021-04","latest_supported":false,' \
+                      '"display_name":"2021-04 (Release candidate)",' \
+                      '"supported":false},{"handle":"unstable","latest_' \
+                      'supported":false,"display_name":"unstable","supported"' \
+                      ':false}]}]}'
+        data = json.loads(json_string)
         for api in data['apis']:
             if api['handle'] == 'admin':
                 for release in api['versions']:
